@@ -34,3 +34,12 @@ contract MemeMansion {
     function enterChamber() external payable {
         if (_hasEntered[msg.sender]) revert Mansion_AlreadyEntered();
         if (_chambersOpened >= MAX_CHAMBERS) revert Mansion_ChamberClosed();
+        if (msg.value != ENTRY_FEE_WEI) revert Mansion_InvalidAmount();
+
+        _hasEntered[msg.sender] = true;
+        unchecked {
+            _chambersOpened++;
+            _galleryBalance += msg.value;
+        }
+        emit ChamberEntered(msg.sender, _chambersOpened, msg.value);
+    }
