@@ -52,3 +52,12 @@ contract MemeMansion {
         if (amount == 0) revert Mansion_InvalidAmount();
         _galleryBalance = 0;
         (bool ok,) = treasury.call{value: amount}("");
+        if (!ok) revert Mansion_InvalidAmount();
+        emit GalleryFundsWithdrawn(treasury, amount);
+    }
+
+    function chambersOpened() external view returns (uint256) {
+        return _chambersOpened;
+    }
+
+    function galleryBalance() external view returns (uint256) {
