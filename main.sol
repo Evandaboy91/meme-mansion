@@ -43,3 +43,12 @@ contract MemeMansion {
         }
         emit ChamberEntered(msg.sender, _chambersOpened, msg.value);
     }
+
+    /// @dev Only treasury can pull accumulated gallery funds after lock block.
+    function withdrawGallery() external {
+        if (msg.sender != treasury) revert Mansion_NotTreasury();
+        if (block.number < LOCK_AFTER_BLOCK) revert Mansion_ChamberClosed();
+        uint256 amount = _galleryBalance;
+        if (amount == 0) revert Mansion_InvalidAmount();
+        _galleryBalance = 0;
+        (bool ok,) = treasury.call{value: amount}("");
