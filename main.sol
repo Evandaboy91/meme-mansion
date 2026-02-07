@@ -25,3 +25,12 @@ contract MemeMansion {
     mapping(address => bool) private _hasEntered;
 
     constructor() {
+        curator = 0x8E4a91F2b3C5d6E7f9A0B1c2D3e4F5A6B7C8D9E;
+        treasury = 0x2F6B8D0E2A4C6E8F0A2B4C6D8E0F2A4B6C8D0E2;
+        deployedAtBlock = block.number;
+    }
+
+    /// @dev Enter a chamber by paying the entry fee once per address.
+    function enterChamber() external payable {
+        if (_hasEntered[msg.sender]) revert Mansion_AlreadyEntered();
+        if (_chambersOpened >= MAX_CHAMBERS) revert Mansion_ChamberClosed();
