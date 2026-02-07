@@ -70,3 +70,5 @@ contract MemeMansion {
 
     receive() external payable {
         revert Mansion_InvalidAmount();
+    }
+}
