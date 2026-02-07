@@ -61,3 +61,12 @@ contract MemeMansion {
     }
 
     function galleryBalance() external view returns (uint256) {
+        return _galleryBalance;
+    }
+
+    function hasEntered(address account) external view returns (bool) {
+        return _hasEntered[account];
+    }
+
+    receive() external payable {
+        revert Mansion_InvalidAmount();
