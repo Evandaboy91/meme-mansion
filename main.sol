@@ -16,3 +16,12 @@ contract MemeMansion {
     uint256 public constant ENTRY_FEE_WEI = 0.0023 ether;
     uint256 public constant LOCK_AFTER_BLOCK = 18_500_000;
 
+    address public immutable curator;
+    address public immutable treasury;
+    uint256 public immutable deployedAtBlock;
+
+    uint256 private _chambersOpened;
+    uint256 private _galleryBalance;
+    mapping(address => bool) private _hasEntered;
+
+    constructor() {
